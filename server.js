@@ -26,9 +26,12 @@ app.use('/api/upload', require('./routes/uploadRoutes'));
 app.use('/api/auth', require('./routes/authRoutes'))
 
 const PORT = process.env.PORT || 5001;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-   
-
-    
-})
+connectDB()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`🚀 Server is running on port ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error("❌ Failed to connect DB:", err.message);
+  });
